@@ -1,0 +1,427 @@
+=========================
+IRC:
+
+sudo apt-get update
+sudo apt-get upgrade
+sudo apt-get install irssi
+irssi				# start irc client
+/connect irc.overthewire.org	# connect to irc server
+/nick arvinder			# take a nickname
+/join #wargames			# join a channel
+
+
+=========================
+0:
+ssh bandit0@bandit.labs.overthewire.org -p 2220
+pw: bandit0
+
+cat readme
+
+=========================
+1:
+ssh bandit1@bandit.labs.overthewire.org -p 2220
+pw: ZjLjTmM6FvvyRnrb2rfNWOZOTa6ip5If
+
+cat ./-
+
+=========================
+2:
+ssh bandit2@bandit.labs.overthewire.org -p 2220
+pw: 263JGJPfgU6LtdEvgfWU1XP5yac29mFx
+
+cat spaces\ in\ this\ filename
+
+=========================
+3:
+ssh bandit3@bandit.labs.overthewire.org -p 2220
+pw: MNk8KNH3Usiio41PRUEoDFPqfxLPlSmx
+
+ls -a ./inhere/
+cat -- './inhere/...Hiding-From-You'
+
+=========================
+4:
+ssh bandit4@bandit.labs.overthewire.org -p 2220
+pw: 2WmrDFRmJIq3IPxneAaMGhap0pFhF3NJ
+
+find inhere/ -type f -exec file {} ';' # for all files in dir, run 'file' command to show type of data
+cat -- './inhere/-file07'
+
+=========================
+5:
+ssh bandit5@bandit.labs.overthewire.org -p 2220
+pw: 4oQYVPkxZOOEOO5pTW81FB8j8lxXGUQw
+
+ll inhere/maybehere* | grep 1033
+ll inhere/maybehere*/.file2
+cat -- inhere/maybehere07/.file2
+
+OR 
+
+find inhere/ -type f \! -executable -size 1033c -readable
+
+=========================
+6:
+ssh bandit6@bandit.labs.overthewire.org -p 2220
+pw: HWasnPhtq9AVKe0dmk45nxy20cvUa6EG
+
+
+find / -type f -user bandit7 -group bandit6 -size 33c 2>/dev/null
+cat `find / -type f -user bandit7 -group bandit6 -size 33c 2>/dev/null -print`
+
+=========================
+7:
+ssh bandit7@bandit.labs.overthewire.org -p 2220
+pw: morbNTDkSW6jIlUc0ymOdMaLnOlFVAaj
+
+grep millionth data.txt
+
+=========================
+8:
+ssh bandit8@bandit.labs.overthewire.org -p 2220
+pw: dfwvzFQi4mU0wfNbFOe9RoWskMLg7eEc
+
+cat data.txt | sort | uniq -c | grep "1 "
+
+=========================
+9:
+ssh bandit9@bandit.labs.overthewire.org -p 2220
+pw: 4CKMh1JI91bUIZZPXDqGanal4xvAg0JM
+
+strings data.txt | grep '==='
+
+=========================
+10:
+ssh bandit10@bandit.labs.overthewire.org -p 2220
+pw: FGUW5ilLVJrxX9kMYMmlN4MgbpfMiqey
+
+base64 -d data.txt
+
+=========================
+11:
+ssh bandit11@bandit.labs.overthewire.org -p 2220
+pw: dtR173fZKb0RRsDFSGsg2RWnpNVj3qRr
+
+Rotate letters by 13 positions, ROT13.
+cat data.txt  | tr 'A-Za-z' 'N-ZA-Mn-za-m'
+
+=========================
+12:
+ssh bandit12@bandit.labs.overthewire.org -p 2220
+pw: 7x16WNeHIi5YkIhWsfFIqoognUTyj9Q4
+
+
+data.txt compressed multiple times
+mkdir /tmp/arv
+cd /tmp/arv
+cp ~/data.txt .
+xxd -r data.txt > one.txt
+file one.txt # gzip compressed data, was called data2.bin
+mv one.txt data2.bin.gz
+gzip -d data2.bin.gz # transforms file to data2.bin
+file data2.bin # bzip2 compressed file
+bzip2 -d data2.bin   # transforms file to data2.bin.out
+file data2.bin.out   # gzip compressed file, was data4.bin
+mv data2.bin.out data4.bin.gz
+gzip -d data4.bin.gz # transforms file to data4.bin
+file data4.bin       # POSIX tar archive
+tar -xvf data4.bin   # extracts data5.bin
+file data5.bin       # POSIX tar archive
+tar -xvf data5.bin   # extracts data6.bin
+file data6.bin       # bzip2 compressed data
+bzip2 -d data6.bin   # transforms file to data6.bin.out
+file data6.bin.out   # POSIX tar archive
+mv data6.bin.out data6.bin
+tar -xvf data6.bin   # extracts data8.bin
+file data8.bin       # gzip compressed file, was data9.bin
+mv data8.bin data9.bin.gz
+gzip -d data9.bin.gz # transforms file to data9.bin
+file data9.bin       # ASCII text
+cat data9.bin
+
+
+=========================
+13:
+ssh bandit13@bandit.labs.overthewire.org -p 2220
+pw: FO5dwFsc0cbaIiH0h8J2eUks2vdTDwAn
+
+ll				# shows sshkey.private
+ls /etc/bandit_pass/bandit14	# password for bandit14, permission denied
+ssh -i sshkey.private bandit14@localhost -p 2220
+
+=========================
+14:
+from 13,
+ssh -i sshkey.private -p 2220 bandit14@localhost
+
+# need to submit password for this level to port 30000 of localhost
+cat /etc/bandit_pass/bandit14	# MU4VWeTyJk8ROof1qqmcBPaLh7lDCPvS
+# can use nc (netcat) to send data to a destination with port
+cat /etc/bandit_pass/bandit14 |  nc localhost 30000
+# returns password for next level
+
+=========================
+15:
+ssh bandit15@bandit.labs.overthewire.org -p 2220
+pw: 8xCjnmgoKbGLhHFAZlGE5Tmu4M2tKJQo
+
+# submit current pw to port 30001 using ssl/tls encryption
+openssl s_client localhost:30001	# establishes connection
+<type in pw here and press enter>	# returns kSkvUpMQ7lBYyCM4GBPvCvT1BfWRy0Dx
+# connection closed
+
+=========================
+16:
+ssh bandit16@bandit.labs.overthewire.org -p 2220
+pw: kSkvUpMQ7lBYyCM4GBPvCvT1BfWRy0Dx
+
+# submit current pw to a port in range 31000 to 32000
+nmap -p31000-32000 localhost				# shows five ports that are listening
+ss -t -l '( sport >= :31000 and sport <= :32000 )'	# also shows five listening tcp ports within a range
+openssl s_client localhost:31518 -quiet			# ignore connection commends as password begins with 'k'
+							# returned private key, see below
+cd /tmp
+nano b17.private					# save private key in this file
+
+=========================
+17:
+nano /tmp/b17.key
+chmod 600 /tmp/b17.key
+ssh -i /tmp/b17.key bandit17@bandit.labs.overthewire.org -p 2220
+pw:
+-----BEGIN RSA PRIVATE KEY-----
+MIIEogIBAAKCAQEAvmOkuifmMg6HL2YPIOjon6iWfbp7c3jx34YkYWqUH57SUdyJ
+imZzeyGC0gtZPGujUSxiJSWI/oTqexh+cAMTSMlOJf7+BrJObArnxd9Y7YT2bRPQ
+Ja6Lzb558YW3FZl87ORiO+rW4LCDCNd2lUvLE/GL2GWyuKN0K5iCd5TbtJzEkQTu
+DSt2mcNn4rhAL+JFr56o4T6z8WWAW18BR6yGrMq7Q/kALHYW3OekePQAzL0VUYbW
+JGTi65CxbCnzc/w4+mqQyvmzpWtMAzJTzAzQxNbkR2MBGySxDLrjg0LWN6sK7wNX
+x0YVztz/zbIkPjfkU1jHS+9EbVNj+D1XFOJuaQIDAQABAoIBABagpxpM1aoLWfvD
+KHcj10nqcoBc4oE11aFYQwik7xfW+24pRNuDE6SFthOar69jp5RlLwD1NhPx3iBl
+J9nOM8OJ0VToum43UOS8YxF8WwhXriYGnc1sskbwpXOUDc9uX4+UESzH22P29ovd
+d8WErY0gPxun8pbJLmxkAtWNhpMvfe0050vk9TL5wqbu9AlbssgTcCXkMQnPw9nC
+YNN6DDP2lbcBrvgT9YCNL6C+ZKufD52yOQ9qOkwFTEQpjtF4uNtJom+asvlpmS8A
+vLY9r60wYSvmZhNqBUrj7lyCtXMIu1kkd4w7F77k+DjHoAXyxcUp1DGL51sOmama
++TOWWgECgYEA8JtPxP0GRJ+IQkX262jM3dEIkza8ky5moIwUqYdsx0NxHgRRhORT
+8c8hAuRBb2G82so8vUHk/fur85OEfc9TncnCY2crpoqsghifKLxrLgtT+qDpfZnx
+SatLdt8GfQ85yA7hnWWJ2MxF3NaeSDm75Lsm+tBbAiyc9P2jGRNtMSkCgYEAypHd
+HCctNi/FwjulhttFx/rHYKhLidZDFYeiE/v45bN4yFm8x7R/b0iE7KaszX+Exdvt
+SghaTdcG0Knyw1bpJVyusavPzpaJMjdJ6tcFhVAbAjm7enCIvGCSx+X3l5SiWg0A
+R57hJglezIiVjv3aGwHwvlZvtszK6zV6oXFAu0ECgYAbjo46T4hyP5tJi93V5HDi
+Ttiek7xRVxUl+iU7rWkGAXFpMLFteQEsRr7PJ/lemmEY5eTDAFMLy9FL2m9oQWCg
+R8VdwSk8r9FGLS+9aKcV5PI/WEKlwgXinB3OhYimtiG2Cg5JCqIZFHxD6MjEGOiu
+L8ktHMPvodBwNsSBULpG0QKBgBAplTfC1HOnWiMGOU3KPwYWt0O6CdTkmJOmL8Ni
+blh9elyZ9FsGxsgtRBXRsqXuz7wtsQAgLHxbdLq/ZJQ7YfzOKU4ZxEnabvXnvWkU
+YOdjHdSOoKvDQNWu6ucyLRAWFuISeXw9a/9p7ftpxm0TSgyvmfLF2MIAEwyzRqaM
+77pBAoGAMmjmIJdjp+Ez8duyn3ieo36yrttF5NSsJLAbxFpdlc1gvtGCWW+9Cq0b
+dxviW8+TFVEBl1O4f7HVm6EpTscdDxU+bCXWkfjuRb7Dy9GOtt9JPsX8MBTakzh3
+vBgsyi/sN3RqRBcGU40fOoZyfAMT8s1m/uYv52O6IgeuZ/ujbjY=
+-----END RSA PRIVATE KEY-----
+
+# 2 files, passwords.old and passwords.new
+diff passwords.old passwords.new	# either CgmS55GVlEKTgx8xpW8HuWnHlBKP924b or x2gLTTjFwMOhQ8oWNbMN362QKxfRqGlO
+
+=========================
+18:
+ssh bandit18@bandit.labs.overthewire.org -p 2220
+pw: x2gLTTjFwMOhQ8oWNbMN362QKxfRqGlO
+
+# whn logged in, immediately logged out with ByeBye message
+ssh bandit18@bandit.labs.overthewire.org -p 2220 'ls -ltrh'	# shows 'readme' file
+ssh bandit18@bandit.labs.overthewire.org -p 2220 'cat readme'	# shows cGWpMaKXVwDUNgPAVJbWYuGHVn9zl3j8
+
+=========================
+19:
+ssh bandit19@bandit.labs.overthewire.org -p 2220
+pw: cGWpMaKXVwDUNgPAVJbWYuGHVn9zl3j8
+
+ls -ltrh				# shows 'bandit20-do*' as an executable, owned by bandit19 and group bandit20
+./bandit20-do				# run a command as another user
+ll /etc/bandit_pass/bandit20		# showd bandit20 owned by bandit20
+cd /etc/bandit_pass
+./bandit20-do cat bandit20		# 0qXahG8ZjOVMN9Ghs7iOWsCfZyXOUbYO
+
+=========================
+20:
+ssh bandit20@bandit.labs.overthewire.org -p 2220
+pw: 0qXahG8ZjOVMN9Ghs7iOWsCfZyXOUbYO
+
+ll -trh			# shows 'suconnect*', owner bandit21, group bandit20
+file suconnect		# its an executable
+./suconnect		# usage: ./suconnect port_number
+echo -n $(cat /etc/bandit_pass/bandit20) | nc -l -p 1234 &
+			# open a listening port that will return the current password
+./suconnect 1234	# run the connection script with the port number used
+			# EeoULMCra2q0dSkYj561DX7s1CpBuOBt
+
+=========================
+21:
+ssh bandit21@bandit.labs.overthewire.org -p 2220
+pw: EeoULMCra2q0dSkYj561DX7s1CpBuOBt
+
+# hint is to look for running cronjobs
+ls /etc/cron.d/				# some files, one with bandit22 in the name
+cd /etc/cron.d/
+cat cronjob_bandit22			# references a script /usr/bin/cronjob_bandit22.sh
+cat /usr/bin/cronjob_bandit22.sh	# copies a file /tmp/t7O6lds9S0RqQh9aMcz6ShpAoZKF7fgv
+cat /tmp/t7O6lds9S0RqQh9aMcz6ShpAoZKF7fgv	# tRae0UfB9v0UzbCdn9cY0gQnds9GF58Q
+
+=========================
+22:
+ssh bandit22@bandit.labs.overthewire.org -p 2220
+pw: tRae0UfB9v0UzbCdn9cY0gQnds9GF58Q
+
+ls /etc/crod.d/				# there's a cronjon file for bandit23
+cd /etc/crod.d/
+cat cronjob_bandit23			# references a script /usr/bin/cronjob_bandit23.sh
+cat /usr/bin/cronjob_bandit23.sh	# shows a script that constructs some file names to copy password to
+					# this line makes $(target) for copying to /tmp/$(target)
+echo I am user bandit23 | md5sum | cut -d ' ' -f 1
+					# 8ca319486bfbbc3663ea0fbe81326349
+cat /tmp/$(echo I am user bandit23 | md5sum | cut -d ' ' -f 1)
+					# 0Zf11ioIjMVN551jX3CmStKLYqjk54Ga
+
+=========================
+23:
+ssh bandit23@bandit.labs.overthewire.org -p 2220
+pw: 0Zf11ioIjMVN551jX3CmStKLYqjk54Ga
+
+# This time the cronjob script runs all files in /var/spool/bandit24/foo
+# that are owned by bandit23
+mktemp -d
+cd $(tempdir)
+touch password
+chmod +rw password
+nano arv_script.sh
+(cat etc/bandit_pass/bandit24 > password)
+chmod 777 arv_script.sh
+cp arv_script.sh /var/spool/bandit24/foo
+# wait a minute
+cat password					# gb8KRRCsshuZXI0tUuR6ypOFjiZbf3G8
+
+=========================
+ssh bandit24@bandit.labs.overthewire.org -p 2220
+pw: gb8KRRCsshuZXI0tUuR6ypOFjiZbf3G8
+
+# deamon listening on 30002, needs current pw and a 4 digit code
+
+mktemp -d
+cd $(tempdir)
+
+for i in {0000..9999}
+do
+	echo $(cat /etc/bandit_pass/bandit24) $i >> pos.txt
+done
+
+cat pos.txt | nc localhost 30002 > res.txt
+nl res.txt | tail -10				# The password of user bandit25 is iCi86ttT4KSNe1armKiwbQNmB3YJP3q4
+
+=========================
+ssh bandit25@bandit.labs.overthewire.org -p 2220
+pw: iCi86ttT4KSNe1armKiwbQNmB3YJP3q4
+
+# bandit26.sshkey is in the home directory, saved it to local pc
+
+=========================
+ssh bandit26@bandit.labs.overthewire.org -p 2220 -i wargames/bandit/bandit26.sshkey
+# Once logged in, a splash screen is shwon and then shell is exited.
+# As bandit25, one can see the default shell it /etc/passwd, bandit26 uses /usr/bin/showtext
+cat /usr/bin/showtext
+# This executes a 'more' command and then 'exit 0'
+# When more cannot display everything in one screen, it will enter interactive mode
+# Making the terminal screen small then logging in will give an interactive 'more' mode
+# From here, can do ':e /etc/bandit\_pass/bandit26' to open the password file
+pw: s0773xxkk0MXfdqOfPRVr9L3jJBUOgCZ
+# One can open a shell with ':shell', but first need to avoid the default shell
+# ':set shell=/bin/bash'
+# ':shell'
+ls			# shows bandit27-do and text.txt
+./bandit27-do -h	# run a command as another user
+./bandit27-do cat /etc/bandit_pass/bandit27	# upsNCc7vzaRDx6oZC6GiR6ERwe1MowGB
+
+=========================
+ssh bandit27@bandit.labs.overthewire.org -p 2220
+pw: upsNCc7vzaRDx6oZC6GiR6ERwe1MowGB
+
+# there is a git repo at ssh://bandit27-git@localhost/home/bandit27-git/repo via port 2220
+# The password for the user bandit27-git is the same as for the user bandit27
+
+mktemp -d /tmp/arv.XXX		# creates a dir in /tmp
+git clone ssh://bandit27-git@localhost/home/bandit27-git/repo /tmp/arv.XXX
+# this fails, with a message about using the right port
+git clone ssh://bandit27-git@localhost:2220/home/bandit27-git/repo /tmp/arv.XXX
+# this succeeds
+ls /tmp/arv.XXX/
+# shows checked out version of the cloned repo, with a readme file
+cat /tmp/arv.XXX/README
+# Yz9IpL0sBcCeuG7m9uQFt8ZNpS4HZRcN
+
+
+=========================
+ssh bandit28@bandit.labs.overthewire.org -p 2220
+pw: Yz9IpL0sBcCeuG7m9uQFt8ZNpS4HZRcN
+
+mktemp -d /tmp/arv.XXX
+git clone ssh://bandit28-git@localhost:2220/home/bandit28-git/repo /tmp/arv.XXX/repo
+ls /tmp/arv.XXX/repo			# shows a README.md
+cat /tmp/arv.XXX/repo/README.md		# shows an entry for password, but changed to X's
+cd /tmp/arv.XXX/repo
+git status
+git log					# shows three commits including initial
+git diff HEAD~1				# diff shows password: 4pT1t5DENaYuqnqvadYs1oE4QLCdjmJ7
+
+=========================
+ssh bandit29@bandit.labs.overthewire.org -p 2220
+pw: 4pT1t5DENaYuqnqvadYs1oE4QLCdjmJ7
+
+mktemp -d /tmp/arv.XXX
+tmpdir = /tmp/arv.XXX
+git clone ssh://bandit29-git@localhost:2220/home/bandit29-git/repo $tmpdir/repo
+ls $tmpdir/repo				# shows README.md
+cd $tmpdir/repo
+cat README.md				# says that password not stored in production
+git branch				# multiple branches: HEAD, dev, master, sploits-dev
+git checkout dev
+cat README.md				# qp30ex3VLz5MDG1n91YowTv4Q8l7CDZL
+
+=========================
+ssh bandit30@bandit.labs.overthewire.org -p 2220
+pw: qp30ex3VLz5MDG1n91YowTv4Q8l7CDZL
+
+# same method of cloning repo for ssh://bandit30-git@localhost:2220/home/bandit30-git/repo
+cat README.md		# empty
+git branch		# only master
+git remote -rv		# only origin
+git tag			# 'secret'#
+git show secret		# fb5S2xb7bRyFmAvQYQGEqsbhVyJqhnDy
+
+
+=========================
+ssh bandit31@bandit.labs.overthewire.org -p 2220
+pw: fb5S2xb7bRyFmAvQYQGEqsbhVyJqhnDy
+
+# git cloned repo for bandit31 as previous
+# README.md directs to push a key.txt file with contents 'May I come in'?
+# Created the file, but it is ignored by the .gitignore
+# git add key.txt -f to force staging
+# git push of commit/branch returns the password: 3O9RfhqyAlVBEZpVb6LYStshZoqoSx5K
+
+=========================
+ssh bandit32@bandit.labs.overthewire.org -p 2220
+pw: 3O9RfhqyAlVBEZpVb6LYStshZoqoSx5K
+
+# Greeted with 'WELCOME TO UPPER CASE SHELL' message.
+# All commands are translated to upper case, annoying.
+# The shell has some env vars which are upper case, like TERM and SHELL and HOME, or PWD.
+# $0 expands to the name of the shell or script.
+$0				# enter a normal shell
+ls -la				# shows item 'uppershell' which runs as bandit33
+whoami				# bandit33
+ls /etc/bandit_pass/bandit33	# tQdtbs5D5i2vJwkO8mEyYEyTL8izoeJ0
+
+
+=========================
+ssh bandit33@bandit.labs.overthewire.org -p 2220
+pw: tQdtbs5D5i2vJwkO8mEyYEyTL8izoeJ0
+
+ls		# README.txt
+cat README.txt	# Congratulations!
