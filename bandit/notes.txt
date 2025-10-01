@@ -79,7 +79,7 @@ find inhere/ -type f \! -executable -size 1033c -readable
 ssh bandit6@bandit.labs.overthewire.org -p 2220
 pw: HWasnPhtq9AVKe0dmk45nxy20cvUa6EG
 
-
+# looking for a file that is 33 bytes size, owned by bandit7 and in group bandit6
 find / -type f -user bandit7 -group bandit6 -size 33c 2>/dev/null
 cat `find / -type f -user bandit7 -group bandit6 -size 33c 2>/dev/null -print`
 
@@ -88,28 +88,40 @@ cat `find / -type f -user bandit7 -group bandit6 -size 33c 2>/dev/null -print`
 ssh bandit7@bandit.labs.overthewire.org -p 2220
 pw: morbNTDkSW6jIlUc0ymOdMaLnOlFVAaj
 
-grep millionth data.txt
+grep millionth data.txt		# find every instance of string 'millionth' in this file, should only be one
 
 =========================
 8:
 ssh bandit8@bandit.labs.overthewire.org -p 2220
 pw: dfwvzFQi4mU0wfNbFOe9RoWskMLg7eEc
 
-cat data.txt | sort | uniq -c | grep "1 "
+ls -a						# theres a data.txt
+cat data.txt					# each line is same length, looks like many passwords
+nl data.txt | tail -1				# count lines, show last count, 1001 lines
+cat data.txt | sort				# sort ordinally, shows some repetition
+cat data.txt | sort | uniq			# shows unique strings, no repetition
+cat data.txt | sort | uniq -c			# counts occurrences of each unique line
+cat data.txt | sort | uniq -c | grep "1 "	# looks for a count of 1, shows only one instance, the only unique string
 
 =========================
 9:
 ssh bandit9@bandit.labs.overthewire.org -p 2220
 pw: 4CKMh1JI91bUIZZPXDqGanal4xvAg0JM
 
-strings data.txt | grep '==='
+ls -a				# shows a data.txt file
+cat data.txt			# garbled, pressed enter and it tried to install something 0.0
+strings data.txt		# strings will only show the printable strings in a file, ignores the garbled binary
+strings data.txt | grep '==='   # picks out line that say ' the pass word is ###'
 
 =========================
 10:
 ssh bandit10@bandit.labs.overthewire.org -p 2220
 pw: FGUW5ilLVJrxX9kMYMmlN4MgbpfMiqey
 
-base64 -d data.txt
+ll -a			# shows data.txt
+file data.txt		# ASCII-text
+cat data.txt		# shows some string, looks longer that previous passwords
+base64 -d data.txt	# outputs 'the password is ###'
 
 =========================
 11:
