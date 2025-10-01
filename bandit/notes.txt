@@ -22,21 +22,27 @@ cat readme
 ssh bandit1@bandit.labs.overthewire.org -p 2220
 pw: ZjLjTmM6FvvyRnrb2rfNWOZOTa6ip5If
 
-cat ./-
+ls			# There's a file titled dash '-'
+cat -			# this outputs standard input
+cat ./-			# specifying current directory with './' allows targeting of file called '-'
 
 =========================
 2:
 ssh bandit2@bandit.labs.overthewire.org -p 2220
 pw: 263JGJPfgU6LtdEvgfWU1XP5yac29mFx
 
-cat spaces\ in\ this\ filename
+ls				# shows a file with spaces in its filename
+cat --<tab>			# doesn't work, - is a flag for standard input
+cat ./--<tab>			# this works...
+cat ./--spaces\ in\ this\ filename--
 
 =========================
 3:
 ssh bandit3@bandit.labs.overthewire.org -p 2220
 pw: MNk8KNH3Usiio41PRUEoDFPqfxLPlSmx
 
-ls -a ./inhere/
+ls -a					# shows a directory 'inhere'
+ls -a ./inhere/				# shows a file called '...Hiding-From-You'
 cat -- './inhere/...Hiding-From-You'
 
 =========================
@@ -44,7 +50,12 @@ cat -- './inhere/...Hiding-From-You'
 ssh bandit4@bandit.labs.overthewire.org -p 2220
 pw: 2WmrDFRmJIq3IPxneAaMGhap0pFhF3NJ
 
-find inhere/ -type f -exec file {} ';' # for all files in dir, run 'file' command to show type of data
+ls -a					# shows a directory 'inhere'
+ls -a inhere/				# shows ten files, called -file0x
+find inhere/ -type f -exec file {} ';'  # for all files in dir, run 'file' command to show type of data
+					# the ';' character stops args being send to the command to execute, i.e. file
+					# 9 are data type, 1 is ASCII text
+					# braces specify a list of comma separated characters to expand + permutate file naems
 cat -- './inhere/-file07'
 
 =========================
@@ -52,8 +63,11 @@ cat -- './inhere/-file07'
 ssh bandit5@bandit.labs.overthewire.org -p 2220
 pw: 4oQYVPkxZOOEOO5pTW81FB8j8lxXGUQw
 
-ll inhere/maybehere* | grep 1033
-ll inhere/maybehere*/.file2
+ls -a					# shows 'inhere' directory
+ls -a inhere				# shows lots of directories: 'maybeherexx'
+ll inhere/maybehere* | grep 1033	# looking for a file that is 1033 size, shows '.file2'
+ll inhere/maybehere*/.file2		# list all locations for filenames '.file2'
+ll inhere/*/.file2 | grep 1033		# of these files, which ha size 1033?
 cat -- inhere/maybehere07/.file2
 
 OR 
