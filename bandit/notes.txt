@@ -129,7 +129,9 @@ ssh bandit11@bandit.labs.overthewire.org -p 2220
 pw: dtR173fZKb0RRsDFSGsg2RWnpNVj3qRr
 
 Rotate letters by 13 positions, ROT13.
-cat data.txt  | tr 'A-Za-z' 'N-ZA-Mn-za-m'
+ls -a						# shows data.txt
+cat data.txt					# shows a message that could be password, but gone through a cipher
+cat data.txt  | tr 'A-Za-z' 'N-ZA-Mn-za-m'	# translate or delete characters
 
 =========================
 12:
@@ -144,25 +146,25 @@ cp ~/data.txt .
 xxd -r data.txt > one.txt
 file one.txt # gzip compressed data, was called data2.bin
 mv one.txt data2.bin.gz
-gzip -d data2.bin.gz # transforms file to data2.bin
-file data2.bin # bzip2 compressed file
-bzip2 -d data2.bin   # transforms file to data2.bin.out
-file data2.bin.out   # gzip compressed file, was data4.bin
+gzip -d data2.bin.gz		# transforms file to data2.bin
+file data2.bin			# bzip2 compressed file
+bzip2 -d data2.bin		# transforms file to data2.bin.out
+file data2.bin.out		# gzip compressed file, was data4.bin
 mv data2.bin.out data4.bin.gz
-gzip -d data4.bin.gz # transforms file to data4.bin
-file data4.bin       # POSIX tar archive
-tar -xvf data4.bin   # extracts data5.bin
-file data5.bin       # POSIX tar archive
-tar -xvf data5.bin   # extracts data6.bin
-file data6.bin       # bzip2 compressed data
-bzip2 -d data6.bin   # transforms file to data6.bin.out
-file data6.bin.out   # POSIX tar archive
+gzip -d data4.bin.gz		# transforms file to data4.bin
+file data4.bin			# POSIX tar archive
+tar -xvf data4.bin		# extracts data5.bin
+file data5.bin			# POSIX tar archive
+tar -xvf data5.bin		# extracts data6.bin
+file data6.bin			# bzip2 compressed data
+bzip2 -d data6.bin		# transforms file to data6.bin.out
+file data6.bin.out		# POSIX tar archive
 mv data6.bin.out data6.bin
-tar -xvf data6.bin   # extracts data8.bin
-file data8.bin       # gzip compressed file, was data9.bin
+tar -xvf data6.bin		# extracts data8.bin
+file data8.bin			# gzip compressed file, was data9.bin
 mv data8.bin data9.bin.gz
-gzip -d data9.bin.gz # transforms file to data9.bin
-file data9.bin       # ASCII text
+gzip -d data9.bin.gz		# transforms file to data9.bin
+file data9.bin			# ASCII text
 cat data9.bin
 
 
